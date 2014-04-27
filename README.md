@@ -1,6 +1,6 @@
 TidyData
 ========
-## First, read all files that we need.
+.## First, read all files that we need.
 
 subject_train <- read.table("./UCI HAR Dataset/train/subject_train.txt")
 X_train <- read.table("./UCI HAR Dataset/train/X_train.txt")
@@ -11,25 +11,25 @@ subject_test <- read.table("./UCI HAR Dataset/test/subject_test.txt")
 features <- read.table("./UCI HAR Dataset/features.txt")
 activity_labels <- read.table("./UCI HAR Dataset/activity_labels.txt")
 
-## Data subject_train, X_train, y_train, X_test, y_test, subject_test, features, activity_labels are all read 
-## from the given directory.
+.## Data subject_train, X_train, y_train, X_test, y_test, subject_test, features, activity_labels are all read 
+.## from the given directory.
 
 
-## For requirement 2, merges the training and the test sets to create one data set.
+.## For requirement 2, merges the training and the test sets to create one data set.
 
 X <- rbind(X_test,X_train)
 subject <- rbind(subject_test,subject_train)
 y <- rbind(y_test,y_train)
 
 
-## Extracts only the measurements on the mean and standard deviation for each measurement. First, I name the
-## variables' name with data features. Then, I use the function grep() to get the extracted data. 
+.## Extracts only the measurements on the mean and standard deviation for each measurement. First, I name the
+.## variables' name with data features. Then, I use the function grep() to get the extracted data. 
 
 names(X) <- features$V2
 X2 <- X[,grep("mean\\(\\)|std",features$V2)]
 
 
-## Uses descriptive activity names to name the activities in the data set.
+.## Uses descriptive activity names to name the activities in the data set.
 
 activity <- as.character(y[,1]) 
 y[,2] <- activity
@@ -41,8 +41,8 @@ Dtdt <- cbind(subject,y[,2],X2)
 names(Dtdt)[1:2] <- c("subject","activity")
 
 
-## Creates a second, independent tidy data set with the average of each variable for each activity and each 
-## subject. 
+.## Creates a second, independent tidy data set with the average of each variable for each activity and each 
+.## subject. 
 
 s <- split(Dtdt,list(Dtdt$activity,Dtdt$subject))
 sub <- lapply(s,function(s) {
@@ -58,6 +58,6 @@ for(i in 2:180){
 rownames(tidy_data) <- seq(tidy_data$subject)
 
 
-## output the tidy data set
+.## output the tidy data set
 
 write.csv(tidy_data,"./tidy_data.txt")
